@@ -3,3 +3,6 @@
 .project
 test-lib/
 dev-lib/
+bin/
+dist/
+lib/

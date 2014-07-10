@@ -29,5 +29,36 @@
     <dependency org="pentaho" name="pentaho-xul-swt" rev="${dependency.kettle.revision}" changing="true"/>
     
     <dependency org="junit" name="junit" rev="4.7" transitive="false" conf="test->default"/>
+
+    <!--
+    <dependency org="com.sun.jersey.contribs" name="jersey-spring" rev="${dependency.jersey.revision}" transitive="false" conf="default->default" />
+    -->
+    <dependency org="org.glassfish.grizzly" name="grizzly-framework" rev="${dependency.grizzly.revision}" transitive="false" conf="default->default"/>
+    <dependency org="org.glassfish.grizzly" name="grizzly-http" rev="${dependency.grizzly.revision}" transitive="false" conf="default->default"/>
+    <dependency org="org.glassfish.grizzly" name="grizzly-http-server" rev="${dependency.grizzly.revision}" transitive="false" conf="default->default"/>
+    <dependency org="org.glassfish.grizzly" name="grizzly-http-servlet" rev="${dependency.grizzly.revision}" transitive="false" conf="default->default"/>
+    <!--
+    <dependency org="org.glassfish.grizzly" name="grizzly-http-all" rev="${dependency.grizzly.revision}" transitive="false" conf="default->default"/>
+    -->
+    <dependency org="org.springframework" name="spring-core" rev="${dependency.springframework.revision}" transitive="false" conf="default->default" />
+    <dependency org="org.springframework" name="spring-beans" rev="${dependency.springframework.revision}" transitive="false" conf="default->default" />
+    <dependency org="org.springframework" name="spring-context" rev="${dependency.springframework.revision}" transitive="false" conf="default->default" />
+    <dependency org="org.springframework" name="spring-web" rev="${dependency.springframework.revision}" transitive="false" conf="default->default" />
+    <dependency org="org.springframework" name="spring-expression" rev="${dependency.springframework.revision}" transitive="false" conf="default->default" />
+    <!--
+    <dependency org="org.springframework" name="spring-messaging" rev="${dependency.springframework.revision}" transitive="false" conf="default->default"  />
+    -->
+    <dependency org="org.springframework" name="spring-tx" rev="${dependency.springframework.revision}" transitive="false" conf="default->default"  />
+    <dependency org="org.springframework" name="spring-webmvc" rev="${dependency.springframework.revision}" transitive="false" conf="default->default" />
+    <dependency org="org.springframework.integration" name="spring-integration-core" rev="${dependency.springframework.integration.revision}" transitive="false" conf="default->default" />
+    <dependency org="org.springframework.integration" name="spring-integration-http" rev="${dependency.springframework.integration.revision}" transitive="false" conf="default->default" />
+    <dependency org="javax.servlet" name="javax.servlet-api" rev="3.1.0" conf="default->default"/>
+
+    <!--
+    <dependency org="org.hibernate" name="hibernate-validator" rev="5.1.1.Final" conf="default->default"/>
+    <dependency org="org.glassfish.web" name="el-impl" rev="2.2" conf="default->default"/>
+    -->
+    <dependency org="org.directwebremoting" name="dwr" rev="3.0.0-rc3-SNAPSHOT" conf="default->default"/>
+
   </dependencies>
 </ivy-module>

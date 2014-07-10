@@ -6,8 +6,8 @@
     xmlns:pen="http://www.pentaho.org/2008/xul" >
        
     <menupopup id="help-popup">
-            <menuseparator insertafter="help-jobentry-plugins" />
-            <menuitem id="help-marketplace" label="Marketplace" command="MarketplaceController.openMarketPlace()" />
-            <menuseparator insertafter="" />
+      <menuseparator insertafter="help-jobentry-plugins" />
+      <menuitem id="help-httplite" label="HttpLite" command="HttpLiteController.openHttpLite()" />
+      <menuseparator insertafter="" />
     </menupopup>
 </overlay>
