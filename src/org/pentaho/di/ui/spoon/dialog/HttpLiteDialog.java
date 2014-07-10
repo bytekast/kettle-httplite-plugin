@@ -7,14 +7,22 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.pentaho.di.ui.core.PropsUI;
+import org.pentaho.di.ui.core.dialog.ShowBrowserDialog;
+import org.pentaho.di.ui.core.dialog.ShowHelpDialog;
 import org.pentaho.di.ui.core.gui.GUIResource;
 import org.pentaho.di.ui.trans.step.BaseStepDialog;
 
 /**
  * @author Rowell Belen
  */
-public class HttpLiteDialog extends Dialog {
+public class HttpLiteDialog extends ShowHelpDialog {
 
+  public HttpLiteDialog(Shell parent, String dialogTitle, String url, String header) {
+    super(parent, dialogTitle, url, header);
+  }
+
+
+  /*
   private Shell shell;
   private PropsUI props;
 
@@ -54,4 +62,5 @@ public class HttpLiteDialog extends Dialog {
       }
     }
   }
+  */
 }
