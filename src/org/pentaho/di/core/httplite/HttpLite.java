@@ -6,7 +6,6 @@ import org.glassfish.grizzly.http.server.NetworkListener;
 import org.glassfish.grizzly.http.server.StaticHttpHandler;
 import org.glassfish.grizzly.servlet.ServletRegistration;
 import org.glassfish.grizzly.servlet.WebappContext;
-import org.pentaho.di.core.exception.KettlePluginException;
 import org.pentaho.di.core.plugins.PluginInterface;
 import org.pentaho.di.core.plugins.PluginRegistry;
 import org.pentaho.di.core.plugins.PluginTypeInterface;
@@ -18,7 +17,6 @@ import org.pentaho.di.ui.spoon.SpoonPluginInterface;
 import org.pentaho.di.ui.spoon.dialog.HttpLiteController;
 import org.pentaho.ui.xul.XulDomContainer;
 import org.pentaho.ui.xul.XulException;
-import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.ContextLoaderListener;
 
 import java.io.File;
@@ -30,8 +28,6 @@ import java.io.IOException;
 @SpoonPlugin( id = "httplite", image = "" )
 @SpoonPluginCategories( { "spoon" } )
 public class HttpLite implements SpoonPluginInterface {
-
-  private ApplicationContext applicationContext;
 
   @Override
   public void applyToContainer(String category, XulDomContainer xulDomContainer) throws XulException {
@@ -64,7 +60,7 @@ public class HttpLite implements SpoonPluginInterface {
     return null;
   }
 
-  private static PluginInterface getPluginObject( String pluginId ) {
+  public static PluginInterface getPluginObject( String pluginId ) {
     for ( Class<? extends PluginTypeInterface> pluginType : PluginRegistry.getInstance().getPluginTypes() ) {
       if ( PluginRegistry.getInstance().findPluginWithId( pluginType, pluginId ) != null ) {
         return PluginRegistry.getInstance().findPluginWithId( pluginType, pluginId );
@@ -81,16 +77,15 @@ public class HttpLite implements SpoonPluginInterface {
     return null;
   }
 
-  private HttpServer server;
+  final private HttpServer server = new HttpServer();
 
   private void startServer(){
     // Initialize Grizzly HttpServer
-    server = new HttpServer();
     NetworkListener listener = new NetworkListener("grizzly2", "localhost", 3388);
     server.addListener(listener);
 
     // Initialize web context
-    WebappContext ctx = new WebappContext("ctx", "/api");
+    final WebappContext ctx = new WebappContext("ctx", "/api");
     ctx.addListener(ContextLoaderListener.class);
     ctx.addContextInitParameter("contextConfigLocation", "classpath*:**/httplite-context.xml");
 
@@ -102,33 +97,25 @@ public class HttpLite implements SpoonPluginInterface {
     // This is no longer required. Spring manages the DWR objects
     //dwrServlet.setInitParameter("classes", "org.pentaho.di.core.httplite.dwr.RemoteFunctions");
 
-    final ClassLoader origClassLoader = Thread.currentThread().getContextClassLoader();
-    ClassLoader pluginClassLoader;
-    try {
-      PluginInterface plugin = getPluginObject( "httplite" );
-      pluginClassLoader = PluginRegistry.getInstance().getClassLoader( plugin );
+    RunInPluginClassLoader.run(new Runnable() {
+      @Override
+      public void run(){
 
-      // Use the plugin class loader
-      Thread.currentThread().setContextClassLoader(pluginClassLoader);
+        ctx.deploy(server);
 
-      ctx.deploy(server);
+        // Add the StaticHttpHandler to serve static resources from the static folder
+        String pluginDirPath = HttpLite.buildPluginFolderPath() + File.separator;
+        server.getServerConfiguration().addHttpHandler(
+           new StaticHttpHandler(pluginDirPath + "www"), "/static");
 
-      // Add the StaticHttpHandler to serve static resources from the static folder
-      String pluginDirPath = HttpLite.buildPluginFolderPath() + File.separator;
-      server.getServerConfiguration().addHttpHandler(
-         new StaticHttpHandler(pluginDirPath + "www"), "/static");
-
-      server.start();
-    }
-    catch (KettlePluginException e) {
-      e.printStackTrace();
-    }
-    catch (IOException e) {
-      e.printStackTrace();
-    }
-    finally {
-      Thread.currentThread().setContextClassLoader(origClassLoader);
-    }
+        try {
+          server.start();
+        }
+        catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    });
   }
 
   private void stopServer() {

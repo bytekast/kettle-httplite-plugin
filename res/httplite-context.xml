@@ -15,12 +15,16 @@
 
   <!-- Scan for Spring Beans -->
   <context:annotation-config/>
-  <context:component-scan base-package="org.pentaho.di.core.httplite"/>
+  <context:component-scan base-package="org.pentaho.di.core.httplite, org.pentaho.di.ui.spoon.dialog"/>
 
   <!-- AutoConfigure DWR Objects -->
   <dwr:annotation-config/>
   <dwr:annotation-scan base-package="org.pentaho.di.core.httplite.dwr" scanDataTransferObject="true" scanRemoteProxy="false" />
 
+  <!-- Allow Non-managed beans to be configured using @Configure/AspectJ-->
+  <context:spring-configured/>
+
+  <bean id="spoonInstance" class="org.pentaho.di.ui.spoon.Spoon" factory-method="getInstance" />
 
   <!--
   <int:inbound-channel-adapter channel="quakeinfotrigger.channel" expression="''">

@@ -8,7 +8,7 @@
   
   See common_build.xml for more details
 ============================================================================-->
-<project name="market" basedir="." default="default" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="httplite" basedir="." default="default" xmlns:ivy="antlib:org.apache.ivy.ant">
 
 
   <description>
@@ -88,5 +88,32 @@
     <echo>Creating the Kettle plugin zip for ${ivy.artifact.id} ...</echo>
     <zip destfile="dist/${ivy.artifact.id}-${project.revision}.zip" basedir="bin/stage" includes="**/*" excludes="**/dev-lib/*" />
   </target>
+
+
+  <taskdef resource="org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties">
+    <classpath>
+      <pathelement location="./dev-lib/aspectjtools-1.6.10.jar"/>
+    </classpath>
+  </taskdef>
+
+  <path id="aspect.path">
+    <pathelement path="./lib/spring-aspects-4.0.2.RELEASE.jar"/>
+  </path>
+
+  <target name="compile.compile">
+    <iajc sourceroots="${src.dir}"
+          destdir="${classes.dir}"
+          debug="true"
+          source="1.6"
+          target="1.6"
+          deprecation="false"
+          failonerror="true"
+          classpathref="classpath">
+
+      <aspectpath refid="aspect.path" />
+    </iajc>
+
+  </target>
+
 
 </project>

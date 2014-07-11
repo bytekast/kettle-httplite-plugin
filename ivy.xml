@@ -48,6 +48,8 @@
     <!--
     <dependency org="org.springframework" name="spring-messaging" rev="${dependency.springframework.revision}" transitive="false" conf="default->default"  />
     -->
+    <dependency org="org.springframework" name="spring-aop" rev="${dependency.springframework.revision}" transitive="false" conf="default->default"  />
+    <dependency org="org.springframework" name="spring-aspects" rev="${dependency.springframework.revision}" transitive="false" conf="default->default"  />
     <dependency org="org.springframework" name="spring-tx" rev="${dependency.springframework.revision}" transitive="false" conf="default->default"  />
     <dependency org="org.springframework" name="spring-webmvc" rev="${dependency.springframework.revision}" transitive="false" conf="default->default" />
     <dependency org="org.springframework.integration" name="spring-integration-core" rev="${dependency.springframework.integration.revision}" transitive="false" conf="default->default" />
@@ -59,6 +61,11 @@
     <dependency org="org.glassfish.web" name="el-impl" rev="2.2" conf="default->default"/>
     -->
     <dependency org="org.directwebremoting" name="dwr" rev="3.0.0-rc3-SNAPSHOT" conf="default->default"/>
+
+    <dependency org="org.aspectj" name="aspectjtools" rev="1.6.10"/>
+    <dependency org="org.aspectj" name="aspectjrt" rev="1.6.10" conf="default->default"/>
+
+    <dependency org="javax" name="javaee-api" rev="6.0"/>
 
   </dependencies>
 </ivy-module>

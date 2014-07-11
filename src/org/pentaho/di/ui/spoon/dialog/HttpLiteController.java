@@ -13,7 +13,7 @@ public class HttpLiteController extends AbstractXulEventHandler {
     showHttpLiteDialog();
   }
 
-  public static void showHttpLiteDialog() {
+  public void showHttpLiteDialog() {
     final String url = "http://localhost:3388/static/index.html";
     HttpLiteDialog httpLiteDialog = new HttpLiteDialog( Spoon.getInstance().getShell(), "HttpLite", url, "AngularJS Test" );
     httpLiteDialog.open();
@@ -22,5 +22,4 @@ public class HttpLiteController extends AbstractXulEventHandler {
   public String getName() {
     return "HttpLiteController";
   }
-
 }
