@@ -1,6 +1,5 @@
 package org.pentaho.di.core.httplite;
 
-import org.pentaho.di.core.exception.KettlePluginException;
 import org.pentaho.di.core.plugins.PluginInterface;
 import org.pentaho.di.core.plugins.PluginRegistry;
 

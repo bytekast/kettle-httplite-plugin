@@ -1,30 +1,47 @@
 <!DOCTYPE html>
 <html ng-app>
 <head>
-  <title>Hello World, AngularJS - ViralPatel.net</title>
+  <title>Hello World, AngularJS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script type="text/javascript"
-      src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+          src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
 
   <script type='text/javascript' src='/api/dwr/engine.js'></script>
   <script type='text/javascript' src='/api/dwr/interface/RemoteFunctions.js'></script>
- 	<script type='text/javascript' src='/api/dwr/util.js'></script>
+  <script type='text/javascript' src='/api/dwr/util.js'></script>
+
+  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/base-min.css">
+  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+
+  <script type='text/javascript'>
+    var reply0 = function(data)
+    {
+      if (data != null && typeof data == 'object') alert(dwr.util.toDescriptiveString(data, 2));
+      else dwr.util.setValue('d0', dwr.util.toDescriptiveString(data, 1));
+    }
+  </script>
 </head>
 <body>
-     
-    Write some text in textbox:
-    <input type="text" ng-model="sometext" />
- 
-    <h1>Hello {{ sometext }}</h1>
 
-	  <input class='ibutton' type='button' onclick='RemoteFunctions.getPluginFolderPath(reply0);' value='AJAX Call'  title='Calls RemoteFunctions.getPluginFolderPath(). View source for details.'/>
-	  <script type='text/javascript'>
-	    var reply0 = function(data)
-	    {
-	      if (data != null && typeof data == 'object') alert(dwr.util.toDescriptiveString(data, 2));
-	      else dwr.util.setValue('d0', dwr.util.toDescriptiveString(data, 1));
-	    }
-	  </script>
-	  <span id='d0' class='reply'></span>
-     
+
+
+
+
+
+<form class="pure-form pure-form-stacked">
+
+  <label for="someText">
+    Write some text in textbox: <input id="someText" type="text" ng-model="sometext" />
+  </label>
+
+  <aside><h1>Hello {{ sometext }}</h1></aside>
+
+  <input class="pure-button pure-button-primary" type='button'
+         onclick='RemoteFunctions.getPluginFolderPath(reply0);' value='getPluginFolderPath'
+         title='Calls RemoteFunctions.getPluginFolderPath(). View source for details.'/>
+
+  <aside><span id='d0' class='reply'></span></aside>
+</form>
+
 </body>
 </html>
