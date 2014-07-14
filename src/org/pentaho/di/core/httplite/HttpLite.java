@@ -105,8 +105,9 @@ public class HttpLite implements SpoonPluginInterface {
 
         // Add the StaticHttpHandler to serve static resources from the static folder
         String pluginDirPath = HttpLite.buildPluginFolderPath() + File.separator;
-        server.getServerConfiguration().addHttpHandler(
-           new StaticHttpHandler(pluginDirPath + "www"), "/static");
+        StaticHttpHandler staticHandler = new StaticHttpHandler(pluginDirPath + "www");
+        staticHandler.setFileCacheEnabled(false); // disable cache for dev purposes
+        server.getServerConfiguration().addHttpHandler( staticHandler, "/static");
 
         try {
           server.start();
