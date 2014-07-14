@@ -15,7 +15,7 @@
 
   <!-- Scan for Spring Beans -->
   <context:annotation-config/>
-  <context:component-scan base-package="org.pentaho.di.core.httplite, org.pentaho.di.ui.spoon.dialog"/>
+  <context:component-scan base-package="org.pentaho.di.core.httplite, org.pentaho.di.ui.spoon.dialog, org.pentaho.di.trans.steps.mystep, org.pentaho.di.ui.trans.steps.mystep"/>
 
   <!-- AutoConfigure DWR Objects -->
   <dwr:annotation-config/>
