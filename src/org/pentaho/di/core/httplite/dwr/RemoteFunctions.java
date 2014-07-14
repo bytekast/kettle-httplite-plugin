@@ -5,6 +5,7 @@ import org.directwebremoting.annotations.RemoteProxy;
 import org.pentaho.di.core.httplite.HttpLite;
 import org.pentaho.di.core.httplite.service.AspectTest;
 import org.pentaho.di.core.httplite.service.HelloWorldService;
+import org.pentaho.di.core.httplite.service.MyStepDialogBridge;
 import org.pentaho.di.ui.spoon.Spoon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,9 @@ public class RemoteFunctions {
 
   @Autowired
   private Spoon spoonInstance;
+
+  @Autowired
+  private MyStepDialogBridge myStepDialogBridge;
 
   @RemoteMethod
   public String hello(String s){
@@ -40,5 +44,10 @@ public class RemoteFunctions {
   @RemoteMethod
   public String configurableTest(){
     return new AspectTest().aspectTest();
+  }
+
+  @RemoteMethod
+  public void updateStepName(String stepName){
+    myStepDialogBridge.updateStepName(stepName);
   }
 }
