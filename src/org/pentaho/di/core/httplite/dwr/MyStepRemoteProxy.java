@@ -14,24 +14,24 @@ public class MyStepRemoteProxy implements IMyStepRemoteProxy {
 
   private MyStepDialog myStepDialog;
 
-  public void registerComponent(MyStepDialog myStepDialog){
+  public void register(MyStepDialog myStepDialog){
     this.myStepDialog = myStepDialog;
   }
 
+  @Override
   @RemoteMethod
-  public String getStepName(){
+  public MyStepRemoteModel getModel() {
     if(this.myStepDialog != null){
-      return this.myStepDialog.getStepName();
+      return this.myStepDialog.getModel();
     }
-
     return null;
   }
 
+  @Override
   @RemoteMethod
-  public void setStepName(String stepName){
+  public void applyModel(MyStepRemoteModel myStepRemoteModel) {
     if(this.myStepDialog != null){
-      this.myStepDialog.setStepName(stepName);
+      this.myStepDialog.applyModel(myStepRemoteModel);
     }
   }
-
 }

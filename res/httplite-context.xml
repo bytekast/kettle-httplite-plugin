@@ -26,6 +26,10 @@
 
   <bean id="spoonInstance" class="org.pentaho.di.ui.spoon.Spoon" factory-method="getInstance" />
 
+  <int:channel id="requestChannel" />
+  <int:channel id="replyChannel" />
+  <int:channel id="uiChannel" />
+
   <!--
   <int:inbound-channel-adapter channel="quakeinfotrigger.channel" expression="''">
     <int:poller fixed-delay="60000"></int:poller>

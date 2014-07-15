@@ -1,6 +1,17 @@
 var app = angular.module('myApp', ['ui.bootstrap', 'ngGrid']);
 
 app.controller('TabsDemoCtrl', function($scope) {
+  
+  MyStepRemoteProxy.getModel(function(data){
+    $scope.stepModel = data;
+    $scope.$apply();
+  });
+
+  $scope.$watch("stepModel.stepName", function(newValue, oldValue) {
+    MyStepRemoteProxy.applyModel($scope.stepModel);  
+  });
+
+
   $scope.tabs = [
     { title:'Dynamic Title 1', content:'Dynamic content 1' },
     { title:'Dynamic Title 2', content:'Dynamic content 2', disabled: true }
