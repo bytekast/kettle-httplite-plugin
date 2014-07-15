@@ -6,6 +6,6 @@ package org.pentaho.di.core.httplite.dwr;
  */
 public interface IMyStepRemoteProxy {
 
-  MyStepRemoteModel getModel();
-  void applyModel(MyStepRemoteModel myStepRemoteModel);
+  MyStepRemoteModel getModel(String id);
+  void applyModel(String id, MyStepRemoteModel myStepRemoteModel);
 }

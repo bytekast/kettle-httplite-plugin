@@ -5,6 +5,8 @@ import org.directwebremoting.annotations.RemoteProxy;
 import org.pentaho.di.ui.trans.steps.mystep.MyStepDialog;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+
 /**
  * @author Rowell Belen
  */
@@ -12,26 +14,34 @@ import org.springframework.stereotype.Component;
 @RemoteProxy
 public class MyStepRemoteProxy implements IMyStepRemoteProxy {
 
-  private MyStepDialog myStepDialog;
+  private HashMap<String, MyStepDialog> holder = new HashMap<String, MyStepDialog>();
 
-  public void register(MyStepDialog myStepDialog){
-    this.myStepDialog = myStepDialog;
+  public void register(final String id, MyStepDialog myStepDialog){
+    this.holder.put(id, myStepDialog);
+  }
+
+  public void unregister(final String id){
+    if(id != null){
+      this.holder.remove(id);
+    }
   }
 
   @Override
   @RemoteMethod
-  public MyStepRemoteModel getModel() {
-    if(this.myStepDialog != null){
-      return this.myStepDialog.getModel();
+  public MyStepRemoteModel getModel(String id) {
+    MyStepDialog dialog = this.holder.get(id);
+    if(dialog != null){
+      return dialog.getModel(id);
     }
     return null;
   }
 
   @Override
   @RemoteMethod
-  public void applyModel(MyStepRemoteModel myStepRemoteModel) {
-    if(this.myStepDialog != null){
-      this.myStepDialog.applyModel(myStepRemoteModel);
+  public void applyModel(String id, MyStepRemoteModel myStepRemoteModel) {
+    MyStepDialog dialog = this.holder.get(id);
+    if(dialog != null){
+      dialog.applyModel(id, myStepRemoteModel);
     }
   }
 }

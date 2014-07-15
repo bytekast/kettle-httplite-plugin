@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import java.util.UUID;
 
 /**
  * @author Rowell Belen
@@ -22,16 +24,24 @@ import javax.annotation.PostConstruct;
 @Configurable(preConstruction = true, autowire = Autowire.BY_TYPE)
 public class MyStepDialog extends BaseStepDialog implements StepDialogInterface, IMyStepRemoteProxy {
 
+  private final String ID = UUID.randomUUID().toString();
+
   @Autowired
   private MyStepRemoteProxy myStepRemoteProxy;
 
   public MyStepDialog(Shell parent, Object in, TransMeta transMeta, String sname) {
     super( parent, (BaseStepMeta) in, transMeta, sname );
+
+    // Need to register this dialog to the proxy to expose remote methods implemented in IMyStepRemoteProxy
+    if(myStepRemoteProxy != null){
+      myStepRemoteProxy.register(this.ID, this);
+      logBasic("Registered: " + this.ID);
+    }
   }
 
   @Override
   public String open() {
-    final String url = "http://localhost:3388/static/index.html";
+    final String url = "http://localhost:3388/static/index.html?id=" + this.ID; // pass the unique id to the client
     HttpLiteDialog httpLiteDialog = new HttpLiteDialog( Spoon.getInstance().getShell(), "HttpLite", url, "AngularJS Test" );
     httpLiteDialog.open();
 
@@ -40,14 +50,19 @@ public class MyStepDialog extends BaseStepDialog implements StepDialogInterface,
 
   @PostConstruct
   public void register(){
-    // Need to register this dialog to the proxy to expose remote methods implemented in IMyStepRemoteProxy
+
+  }
+
+  @PreDestroy
+  public void unregister(){
     if(myStepRemoteProxy != null){
-      myStepRemoteProxy.register(this);
+      myStepRemoteProxy.unregister(this.ID);
+      logBasic("Unregistered: " + this);
     }
   }
 
   @Override
-  public MyStepRemoteModel getModel() {
+  public MyStepRemoteModel getModel(String id) {
 
     MyStepRemoteModel model = new MyStepRemoteModel();
     model.setStepName(this.stepname);
@@ -56,7 +71,7 @@ public class MyStepDialog extends BaseStepDialog implements StepDialogInterface,
   }
 
   @Override
-  public void applyModel(MyStepRemoteModel myStepRemoteModel) {
+  public void applyModel(String id, MyStepRemoteModel myStepRemoteModel) {
 
     if(myStepRemoteModel == null){
       return;
