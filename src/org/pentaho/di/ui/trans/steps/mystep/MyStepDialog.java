@@ -1,7 +1,8 @@
 package org.pentaho.di.ui.trans.steps.mystep;
 
 import org.eclipse.swt.widgets.Shell;
-import org.pentaho.di.core.httplite.service.MyStepDialogBridge;
+import org.pentaho.di.core.httplite.dwr.IMyStepRemoteProxy;
+import org.pentaho.di.core.httplite.dwr.MyStepRemoteProxy;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.BaseStepMeta;
 import org.pentaho.di.trans.step.StepDialogInterface;
@@ -16,16 +17,17 @@ import org.springframework.beans.factory.annotation.Configurable;
  * @author Rowell Belen
  */
 @Configurable(preConstruction = true, autowire = Autowire.BY_TYPE)
-public class MyStepDialog extends BaseStepDialog implements StepDialogInterface {
+public class MyStepDialog extends BaseStepDialog implements StepDialogInterface, IMyStepRemoteProxy {
 
   @Autowired
-  private MyStepDialogBridge myStepDialogBridge;
+  private MyStepRemoteProxy myStepRemoteProxy;
 
-  public MyStepDialog( Shell parent, Object in, TransMeta transMeta, String sname ) {
+  public MyStepDialog(Shell parent, Object in, TransMeta transMeta, String sname) {
     super( parent, (BaseStepMeta) in, transMeta, sname );
 
-    if(myStepDialogBridge != null){
-      myStepDialogBridge.registerComponent(this);
+    // Need to register this dialog to the proxy to expose remote methods implemented by IMyStepRemoteProxy
+    if(myStepRemoteProxy != null){
+      myStepRemoteProxy.registerComponent(this);
     }
   }
 
@@ -38,6 +40,12 @@ public class MyStepDialog extends BaseStepDialog implements StepDialogInterface 
     return this.stepname;
   }
 
+  @Override
+  public String getStepName(){
+    return this.stepname;
+  }
+
+  @Override
   public void setStepName(String stepName){
     this.stepname = stepName;
     logBasic(this.stepname);
