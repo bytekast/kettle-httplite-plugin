@@ -42,4 +42,8 @@ public class MyStepDialogProxy implements IMyStepRemoteProxy{
   public void destroy(){
     this.myStepDialog = null; // remove reference for garbage collection
   }
+
+  public MyStepDialog getMyStepDialog() {
+    return myStepDialog;
+  }
 }

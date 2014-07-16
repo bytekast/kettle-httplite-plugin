@@ -36,6 +36,8 @@ public class MyStepDialog extends BaseStepDialog implements StepDialogInterface 
     if(myStepRemoteProxy != null){
       myStepRemoteProxy.register(this.ID, new MyStepDialogProxy(this));
       logBasic("Registered: " + this.ID);
+
+      //TODO need to unregister this when the dialog is closed!!!!!!!
     }
 
     final String url = "http://localhost:3388/static/index.html?id=" + this.ID; // pass the unique id to the client

@@ -2,6 +2,7 @@ package org.pentaho.di.core.httplite.dwr;
 
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -38,5 +39,10 @@ public class MyStepRemoteProxy implements IMyStepRemoteProxy {
     if(dialog != null){
       dialog.applyModel(id, myStepRemoteModel);
     }
+  }
+
+  @Scheduled(fixedRate = 10000)
+  public void cleanup(){
+    System.out.println("size of holder map: " + this.holder.size());
   }
 }
