@@ -65,5 +65,7 @@
 
     <dependency org="javax" name="javaee-api" rev="6.0"/>
 
+    <dependency org="com.thoughtworks.xstream" name="xstream" rev="1.2.2" conf="default->default"/>
+
   </dependencies>
 </ivy-module>

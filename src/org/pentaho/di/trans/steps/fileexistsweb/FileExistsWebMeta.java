@@ -1,6 +1,7 @@
 package org.pentaho.di.trans.steps.fileexistsweb;
 
 import org.pentaho.di.core.annotations.Step;
+import org.pentaho.di.core.httplite.dwr.FileExistsRemoteModel;
 import org.pentaho.di.trans.Trans;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.BaseStepMeta;
@@ -22,6 +23,16 @@ import org.springframework.context.ApplicationContext;
    categoryDescription = "i18n:org.pentaho.di.trans.step:BaseStep.Category.Experimental" )
 @Configurable(preConstruction = true, autowire = Autowire.BY_TYPE)
 public class FileExistsWebMeta extends BaseStepMeta implements StepMetaInterface {
+
+  private FileExistsRemoteModel fileExistsRemoteModel;
+
+  public FileExistsRemoteModel getFileExistsRemoteModel() {
+    return fileExistsRemoteModel;
+  }
+
+  public void setFileExistsRemoteModel(FileExistsRemoteModel fileExistsRemoteModel) {
+    this.fileExistsRemoteModel = fileExistsRemoteModel;
+  }
 
   @Autowired
   private ApplicationContext applicationContext;

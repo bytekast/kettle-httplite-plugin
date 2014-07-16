@@ -3,11 +3,13 @@ package org.pentaho.di.core.httplite.dwr;
 import org.directwebremoting.annotations.DataTransferObject;
 import org.directwebremoting.annotations.RemoteProperty;
 
+import java.io.Serializable;
+
 /**
  * @author Rowell Belen
  */
 @DataTransferObject(javascript = "FileExistsRemoteModel")
-public class FileExistsRemoteModel {
+public class FileExistsRemoteModel implements Serializable{
 
   @RemoteProperty
   private String stepName;
