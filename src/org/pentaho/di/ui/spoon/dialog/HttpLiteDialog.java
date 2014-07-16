@@ -37,9 +37,9 @@ public class HttpLiteDialog extends Dialog {
   private String url;
   private String header;
 
-  //private Button wOK;
-  //private FormData fdOK;
-  //private Listener lsOK;
+  private Button wOK;
+  private FormData fdOK;
+  private Listener lsOK;
 
   private Browser wBrowser;
   private FormData fdBrowser;
@@ -110,24 +110,22 @@ public class HttpLiteDialog extends Dialog {
     buttonsPane.setLayoutData( fdButtonsPane );
 
     // Some buttons
-    //wOK = new Button( buttonsPane, SWT.PUSH );
-    //wOK.setText( BaseMessages.getString(PKG, "System.Button.OK") );
-    //wOK.setBackground( grey );
-    //fdOK = new FormData();
-    //fdOK.left = new FormAttachment( 50, 0 );
-    //fdOK.bottom = new FormAttachment( 100, 0 );
-    //wOK.setLayoutData( fdOK );
+    wOK = new Button( buttonsPane, SWT.PUSH );
+    wOK.setText( BaseMessages.getString(PKG, "System.Button.OK") );
+    wOK.setBackground( grey );
+    fdOK = new FormData();
+    fdOK.left = new FormAttachment( 50, 0 );
+    fdOK.bottom = new FormAttachment( 100, 0 );
+    wOK.setLayoutData( fdOK );
 
     // Add listeners
-    /*
     lsOK = new Listener() {
       public void handleEvent( Event e ) {
         ok();
       }
     };
-    */
 
-    //wOK.addListener( SWT.Selection, lsOK );
+    wOK.addListener( SWT.Selection, lsOK );
 
     // Detect [X] or ALT-F4 or something that kills this window...
     shell.addShellListener( new ShellAdapter() {

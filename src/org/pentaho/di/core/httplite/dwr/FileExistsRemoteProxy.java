@@ -47,4 +47,31 @@ public class FileExistsRemoteProxy implements IFileExistsRemoteProxy {
   public void cleanup(){
     System.out.println("FileExistsRemoteProxy: size of proxyCache map: " + this.proxyCache.size());
   }
+
+  @Override
+  @RemoteMethod
+  public void help(String id) {
+    IFileExistsRemoteProxy proxy = this.proxyCache.get(id);
+    if(proxy != null){
+      proxy.help(id);
+    }
+  }
+
+  @Override
+  @RemoteMethod
+  public void submit(String id, FileExistsRemoteModel fileExistsRemoteModel) {
+    IFileExistsRemoteProxy proxy = this.proxyCache.get(id);
+    if(proxy != null){
+      proxy.submit(id, fileExistsRemoteModel);
+    }
+  }
+
+  @Override
+  @RemoteMethod
+  public void cancel(String id) {
+    IFileExistsRemoteProxy proxy = this.proxyCache.get(id);
+    if(proxy != null){
+      proxy.cancel(id);
+    }
+  }
 }

@@ -1,5 +1,7 @@
 package org.pentaho.di.ui.trans.steps.fileexistsweb;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.BaseStepMeta;
@@ -18,6 +20,7 @@ public class FileExistsWebDialog extends BaseStepDialog implements StepDialogInt
   private final String ID = UUID.randomUUID().toString();
 
   private FileExistsWebDialogProxy fileExistsWebDialogProxy;
+  private HttpLiteDialog httpLiteDialog;
 
   public FileExistsWebDialog(Shell parent, Object in, TransMeta transMeta, String sname) {
     super( parent, (BaseStepMeta) in, transMeta, sname );
@@ -29,7 +32,7 @@ public class FileExistsWebDialog extends BaseStepDialog implements StepDialogInt
     fileExistsWebDialogProxy = new FileExistsWebDialogProxy(this);
 
     final String url = "http://localhost:3388/static/fileexists/index.html?id=" + getID(); // pass the unique id to the client
-    HttpLiteDialog httpLiteDialog =
+    httpLiteDialog =
        new HttpLiteDialog( Spoon.getInstance().getShell(), "HttpLite", url, "File Exists Web Dialog" ){
 
         @Override
@@ -69,5 +72,9 @@ public class FileExistsWebDialog extends BaseStepDialog implements StepDialogInt
 
   public void setStepname(String stepname){
     this.stepname = stepname;
+  }
+
+  public void close(){
+    logBasic("trying to close...");
   }
 }

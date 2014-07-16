@@ -53,6 +53,21 @@ public class FileExistsWebDialogProxy implements IFileExistsRemoteProxy{
     fileExistsWebDialog.setStepname(stepName);
   }
 
+  @Override
+  public void help(String id) {
+    this.fileExistsWebDialog.close();
+  }
+
+  @Override
+  public void submit(String id, FileExistsRemoteModel fileExistsRemoteModel) {
+    this.fileExistsWebDialog.close();
+  }
+
+  @Override
+  public void cancel(String id) {
+    this.fileExistsWebDialog.close();
+  }
+
   @PreDestroy
   public void destroy(){
     fileExistsRemoteProxy.unsubscribe(fileExistsWebDialog.getID());

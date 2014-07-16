@@ -24,4 +24,16 @@ app.controller('formController', function($scope, $location) {
     FileExistsRemoteProxy.applyModel($scope.id, $scope.stepModel);
   });
 
+  $scope.help = function() {
+    FileExistsRemoteProxy.help($scope.id);
+  };
+
+  $scope.submit = function() {
+    FileExistsRemoteProxy.submit($scope.id, $scope.stepModel);
+  };
+
+  $scope.cancel = function() {
+    FileExistsRemoteProxy.cancel($scope.id);
+  };
+
 });

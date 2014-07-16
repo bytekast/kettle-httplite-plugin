@@ -33,22 +33,22 @@
 
     <div class="pure-control-group">
         <label for="stepName">Step name</label>
-        <input id="stepName" type="text" placeholder="Step name" ng-model="stepModel.stepName">
+        <input id="stepName" type="text" placeholder="Step name" ng-model="stepModel.stepName" />
     </div>
 
     <div class="pure-control-group">
         <label for="fileNameField">Filename field</label>
-        <input id="fileNameField" type="text" placeholder="{{fileNameField}}">
+        <input id="fileNameField" type="text" placeholder="" ng-model="stepModel.fileNameField" />
     </div>
 
     <div class="pure-control-group">
         <label for="resultFieldName">Result fieldname</label>
-        <input id="resultFieldName" type="text" placeholder="{{resultFieldName}}">
+        <input id="resultFieldName" type="text" placeholder="" ng-model="stepModel.resultFieldName" />
     </div>
 
     <div class="pure-control-group">
         <label for="addFieldName" class="pure-checkbox">Add fieldname to result</label>
-        <input id="addFieldName" type="checkbox">
+        <input id="addFieldName" type="checkbox" ng-model="stepModel.addFieldName" />
     </div>
 
   </fieldset>
@@ -60,18 +60,18 @@
   
     <div class="pure-control-group">
       <label for="includeFileType" class="pure-checkbox">Include file type</label>
-      <input id="includeFileType" type="checkbox"> 
+      <input id="includeFileType" type="checkbox" ng-model="stepModel.includeFileType" />
     </div>
 
     <div class="pure-control-group">
       <label for="fileTypeField">File type field</label>
-      <input id="fileTypeField" type="text" placeholder="{{fileTypeField}}">
+      <input id="fileTypeField" type="text" placeholder="" ng-model="stepModel.fileFieldType" />
     </div>
 
     <div class="pure-controls">
-      <button type="button" class="pure-button button-warning">Help</button>
-      <button type="submit" class="pure-button pure-button-primary">Okay</button>
-      <button type="button" class="pure-button">Cancel</button>
+      <button type="button" ng-click="help()" class="pure-button button-warning">Help</button>
+      <button type="submit" ng-click="submit()" class="pure-button pure-button-primary">Okay</button>
+      <button type="button" ng-click="cancel()" class="pure-button">Cancel</button>
     </div>
 
   </fieldset>
