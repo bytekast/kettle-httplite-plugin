@@ -27,7 +27,7 @@ public class MyStepDialog extends BaseStepDialog implements StepDialogInterface 
   public String open() {
     myStepDialogProxy = new MyStepDialogProxy(this); // subscribe remote proxy listener for web requests
 
-    final String url = "http://localhost:3388/static/index.html?id=" + getID(); // pass the unique id to the client
+    final String url = "http://localhost:3388/static/mystep/index.html?id=" + getID(); // pass the unique id to the client
     HttpLiteDialog httpLiteDialog =
        new HttpLiteDialog( Spoon.getInstance().getShell(), "HttpLite", url, "AngularJS Test" ){
 
