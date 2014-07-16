@@ -45,6 +45,6 @@ public class MyStepRemoteProxy implements IMyStepRemoteProxy {
 
   @Scheduled(fixedRate = 10000)
   public void cleanup(){
-    System.out.println("size of proxyCache map: " + this.proxyCache.size());
+    System.out.println("MyStepRemoteProxy: size of proxyCache map: " + this.proxyCache.size());
   }
 }
