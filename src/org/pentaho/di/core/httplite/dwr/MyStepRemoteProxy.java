@@ -14,20 +14,22 @@ import java.util.HashMap;
 @RemoteProxy
 public class MyStepRemoteProxy implements IMyStepRemoteProxy {
 
-  private HashMap<String, IMyStepRemoteProxy> holder = new HashMap<String, IMyStepRemoteProxy>();
+  private HashMap<String, IMyStepRemoteProxy> proxyCache = new HashMap<String, IMyStepRemoteProxy>();
 
-  public void register(final String id, IMyStepRemoteProxy myStepRemoteProxy){
-    this.holder.put(id, myStepRemoteProxy);
+  public synchronized void subscribe(final String id, IMyStepRemoteProxy myStepRemoteProxy){
+    this.proxyCache.put(id, myStepRemoteProxy);
+  }
 
-    // need to find a way to clean this up vestigial instances at some point
+  public synchronized void unsubscribe(final String id){
+    this.proxyCache.remove(id);
   }
 
   @Override
   @RemoteMethod
   public MyStepRemoteModel getModel(String id) {
-    IMyStepRemoteProxy dialog = this.holder.get(id);
-    if(dialog != null){
-      return dialog.getModel(id);
+    IMyStepRemoteProxy proxy = this.proxyCache.get(id);
+    if(proxy != null){
+      return proxy.getModel(id);
     }
     return null;
   }
@@ -35,14 +37,14 @@ public class MyStepRemoteProxy implements IMyStepRemoteProxy {
   @Override
   @RemoteMethod
   public void applyModel(String id, MyStepRemoteModel myStepRemoteModel) {
-    IMyStepRemoteProxy dialog = this.holder.get(id);
-    if(dialog != null){
-      dialog.applyModel(id, myStepRemoteModel);
+    IMyStepRemoteProxy proxy = this.proxyCache.get(id);
+    if(proxy != null){
+      proxy.applyModel(id, myStepRemoteModel);
     }
   }
 
   @Scheduled(fixedRate = 10000)
   public void cleanup(){
-    System.out.println("size of holder map: " + this.holder.size());
+    System.out.println("size of proxyCache map: " + this.proxyCache.size());
   }
 }

@@ -28,11 +28,9 @@ public class MyStepDialogProxy implements IMyStepRemoteProxy{
 
   @PostConstruct // called after dependencies are injected
   public void setup(){
-    // Need to register this dialog to the proxy to expose remote methods implemented in IMyStepRemoteProxy
+    // Need to subscribe this dialog to the proxy to expose remote methods implemented in IMyStepRemoteProxy
     if(myStepRemoteProxy != null){
-      myStepRemoteProxy.register(this.myStepDialog.getID(), this);
-
-      //TODO need to unregister this when the dialog is closed!!!!!!!
+      myStepRemoteProxy.subscribe(this.myStepDialog.getID(), this);
     }
   }
 
@@ -50,13 +48,14 @@ public class MyStepDialogProxy implements IMyStepRemoteProxy{
       return;
     }
 
-    String stepname =
+    String stepName =
        (myStepRemoteModel.getStepName() != null) ? myStepRemoteModel.getStepName() : myStepDialog.getStepname();
-    myStepDialog.setStepname(stepname);
+    myStepDialog.setStepname(stepName);
   }
 
   @PreDestroy
   public void destroy(){
+    myStepRemoteProxy.unsubscribe(myStepDialog.getID());
     this.myStepDialog = null; // remove reference for garbage collection
   }
 }

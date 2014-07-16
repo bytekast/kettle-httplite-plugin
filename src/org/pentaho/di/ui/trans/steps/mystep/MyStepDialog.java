@@ -1,6 +1,5 @@
 package org.pentaho.di.ui.trans.steps.mystep;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.eclipse.swt.widgets.Shell;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.BaseStepMeta;
@@ -18,23 +17,44 @@ public class MyStepDialog extends BaseStepDialog implements StepDialogInterface 
 
   private final String ID = UUID.randomUUID().toString();
 
+  private MyStepDialogProxy myStepDialogProxy;
+
   public MyStepDialog(Shell parent, Object in, TransMeta transMeta, String sname) {
     super( parent, (BaseStepMeta) in, transMeta, sname );
   }
 
   @Override
   public String open() {
-    new MyStepDialogProxy(this); // register remote proxy listener for web requests
+    myStepDialogProxy = new MyStepDialogProxy(this); // subscribe remote proxy listener for web requests
+
     final String url = "http://localhost:3388/static/index.html?id=" + getID(); // pass the unique id to the client
-    HttpLiteDialog httpLiteDialog = new HttpLiteDialog( Spoon.getInstance().getShell(), "HttpLite", url, "AngularJS Test" );
+    HttpLiteDialog httpLiteDialog =
+       new HttpLiteDialog( Spoon.getInstance().getShell(), "HttpLite", url, "AngularJS Test" ){
+
+        @Override
+        public void ok(){
+          logBasic("HttpLiteDialog: closing: " + getID());
+          super.ok();
+          onClose();
+        }
+
+       };
+    logBasic("HttpLiteDialog: opening: " + getID());
     httpLiteDialog.open();
 
     return this.stepname;
   }
 
+  private void onClose(){
+    logBasic("MyStepDialog: closing: " + this.getID());
+    if(myStepDialogProxy != null){
+      myStepDialogProxy.destroy(); // unsubscribe remote proxy listener
+      myStepDialogProxy = null; // remove reference for garbage collection
+    }
+  }
+
   public String getID() {
-    // return ID;
-    return DigestUtils.md5Hex(getStepname());
+    return ID;
   }
 
   public String getStepname(){
