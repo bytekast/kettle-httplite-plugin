@@ -1,10 +1,7 @@
 package org.pentaho.di.ui.trans.steps.fileexistsweb;
 
 import com.thoughtworks.xstream.XStream;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
-import org.pentaho.di.core.httplite.RunInSpoonClassLoader;
 import org.pentaho.di.core.httplite.dwr.FileExistsRemoteModel;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.BaseStepMeta;
