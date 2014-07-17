@@ -20,9 +20,9 @@ app.controller('formController', function($scope, $location) {
     $scope.$apply();
   });
 
-  $scope.$watch("stepModel.stepName", function(newValue, oldValue) {
+  $scope.$watch("stepModel", function(newValue, oldValue) {
     FileExistsRemoteProxy.applyModel($scope.id, $scope.stepModel);
-  });
+  }, true);
 
   $scope.help = function() {
     FileExistsRemoteProxy.help($scope.id);
