@@ -32,9 +32,6 @@ public class HttpLiteDialog extends Dialog {
   private Shell shell;
   private PropsUI props;
 
-  private int buttonHeight = 30;
-  private int headerHeight = 55;
-
   private Display display;
 
   public HttpLiteDialog(Shell parent, String dialogTitle, String url) {
@@ -63,10 +60,10 @@ public class HttpLiteDialog extends Dialog {
     props.setLook( wBrowser );
 
     fdBrowser = new FormData();
-    fdBrowser.left = new FormAttachment( 0, 0 );
-    fdBrowser.top = new FormAttachment( 0, headerHeight );
+    fdBrowser.left = new FormAttachment( 0, 10 );
+    fdBrowser.top = new FormAttachment( 0, 5 );
     fdBrowser.right = new FormAttachment( 100, 0 );
-    fdBrowser.bottom = new FormAttachment( 100, -buttonHeight );
+    fdBrowser.bottom = new FormAttachment( 100, 0 );
     wBrowser.setLayoutData( fdBrowser );
 
     // Detect [X] or ALT-F4 or something that kills this window...
@@ -101,6 +98,8 @@ public class HttpLiteDialog extends Dialog {
   }
 
   public void close(){
+
+    // Run in Display thread
     display.asyncExec(new Runnable() {
       @Override
       public void run() {

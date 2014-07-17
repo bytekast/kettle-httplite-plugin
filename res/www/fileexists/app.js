@@ -11,7 +11,7 @@ app.controller('formController', function($scope, $location) {
       vars[hash[0]] = hash[1];
     }
     return vars;
-  }
+  };
 
   $scope.id = $scope.getUrlParams().id;
 
@@ -20,15 +20,12 @@ app.controller('formController', function($scope, $location) {
     $scope.$apply();
   });
 
-  $scope.$watch("stepModel", function(newValue, oldValue) {
-    FileExistsRemoteProxy.applyModel($scope.id, $scope.stepModel);
-  }, true);
-
   $scope.help = function() {
     FileExistsRemoteProxy.help($scope.id);
   };
 
   $scope.submit = function() {
+    //FileExistsRemoteProxy.applyModel($scope.id, $scope.stepModel);
     FileExistsRemoteProxy.submit($scope.id, $scope.stepModel);
   };
 

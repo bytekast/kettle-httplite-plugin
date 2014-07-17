@@ -7,6 +7,7 @@ import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.BaseStepMeta;
 import org.pentaho.di.trans.step.StepDialogInterface;
 import org.pentaho.di.trans.steps.fileexistsweb.FileExistsWebMeta;
+import org.pentaho.di.ui.core.dialog.ShowHelpDialog;
 import org.pentaho.di.ui.spoon.Spoon;
 import org.pentaho.di.ui.spoon.dialog.HttpLiteDialog;
 import org.pentaho.di.ui.trans.step.BaseStepDialog;
@@ -58,7 +59,7 @@ public class FileExistsWebDialog extends BaseStepDialog implements StepDialogInt
 
          @Override
          public void setSize(final Shell shell){
-           BaseStepDialog.setSize( shell, 485, 525, true );
+           BaseStepDialog.setSize( shell, 500, 480, true );
          }
 
        };
@@ -85,6 +86,16 @@ public class FileExistsWebDialog extends BaseStepDialog implements StepDialogInt
   public void close(){
     logBasic("trying to close...");
     httpLiteDialog.close();
+  }
+
+  public void showHelp(){
+    Spoon.getInstance().getShell().getDisplay().asyncExec(new Runnable() {
+      @Override
+      public void run() {
+        ShowHelpDialog dialog = new ShowHelpDialog(Spoon.getInstance().getShell(), "Help", "http://lmgtfy.com/?q=spoon+file+exists+step&l=1", "" );
+        dialog.open();
+      }
+    });
   }
 
   private void persistModel(){

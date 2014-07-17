@@ -36,12 +36,6 @@ public class FileExistsWebDialogProxy implements IFileExistsRemoteProxy{
 
   @Override
   public FileExistsRemoteModel getModel(String id) {
-    /*
-    FileExistsRemoteModel model = new FileExistsRemoteModel();
-    model.setStepName(fileExistsWebDialog.getStepname());
-
-    return model;
-    */
     return fileExistsWebDialog.getModel();
   }
 
@@ -51,27 +45,23 @@ public class FileExistsWebDialogProxy implements IFileExistsRemoteProxy{
       return;
     }
 
-    /*
-    String stepName =
-       (fileExistsRemoteModel.getStepName() != null) ? fileExistsRemoteModel.getStepName() : fileExistsWebDialog.getStepname();
-    fileExistsWebDialog.setStepname(stepName);
-    */
-
     fileExistsWebDialog.setModel(fileExistsRemoteModel);
   }
 
   @Override
   public void help(String id) {
-    this.fileExistsWebDialog.close();
+    this.fileExistsWebDialog.showHelp();
   }
 
   @Override
   public void submit(String id, FileExistsRemoteModel fileExistsRemoteModel) {
+    this.applyModel(id, fileExistsRemoteModel);
     this.fileExistsWebDialog.close();
   }
 
   @Override
   public void cancel(String id) {
+    // do nothing
     this.fileExistsWebDialog.close();
   }
 
