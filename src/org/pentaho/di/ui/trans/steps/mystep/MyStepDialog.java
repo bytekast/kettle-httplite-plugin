@@ -29,7 +29,7 @@ public class MyStepDialog extends BaseStepDialog implements StepDialogInterface 
 
     final String url = "http://localhost:3388/static/mystep/index.html?id=" + getID(); // pass the unique id to the client
     HttpLiteDialog httpLiteDialog =
-       new HttpLiteDialog( Spoon.getInstance().getShell(), "HttpLite", url, "AngularJS Test" ){
+       new HttpLiteDialog( Spoon.getInstance().getShell(), "AngularJS Test", url){
 
         @Override
         public void ok(){

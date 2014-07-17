@@ -4,6 +4,7 @@ import com.thoughtworks.xstream.XStream;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
+import org.pentaho.di.core.httplite.RunInSpoonClassLoader;
 import org.pentaho.di.core.httplite.dwr.FileExistsRemoteModel;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.BaseStepMeta;
@@ -49,7 +50,7 @@ public class FileExistsWebDialog extends BaseStepDialog implements StepDialogInt
 
     final String url = "http://localhost:3388/static/fileexists/index.html?id=" + getID(); // pass the unique id to the client
     httpLiteDialog =
-       new HttpLiteDialog( Spoon.getInstance().getShell(), "HttpLite", url, "File Exists Web Dialog" ){
+       new HttpLiteDialog( Spoon.getInstance().getShell(), "File Exists Web Dialog", url){
 
         @Override
         public void ok(){
@@ -86,7 +87,7 @@ public class FileExistsWebDialog extends BaseStepDialog implements StepDialogInt
 
   public void close(){
     logBasic("trying to close...");
-    httpLiteDialog.ok();
+    httpLiteDialog.close();
   }
 
   private void persistModel(){

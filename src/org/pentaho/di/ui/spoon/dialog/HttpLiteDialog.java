@@ -4,22 +4,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
-import org.pentaho.di.core.Const;
-import org.pentaho.di.i18n.BaseMessages;
 import org.pentaho.di.ui.core.PropsUI;
 import org.pentaho.di.ui.core.database.dialog.DatabaseDialog;
 import org.pentaho.di.ui.core.gui.GUIResource;
@@ -35,11 +25,6 @@ public class HttpLiteDialog extends Dialog {
 
   private String dialogTitle;
   private String url;
-  private String header;
-
-  private Button wOK;
-  private FormData fdOK;
-  private Listener lsOK;
 
   private Browser wBrowser;
   private FormData fdBrowser;
@@ -49,20 +34,19 @@ public class HttpLiteDialog extends Dialog {
 
   private int buttonHeight = 30;
   private int headerHeight = 55;
-  private int headerLabelPosition = 10;
 
+  private Display display;
 
-  public HttpLiteDialog(Shell parent, String dialogTitle, String url, String header) {
+  public HttpLiteDialog(Shell parent, String dialogTitle, String url) {
     super( parent, SWT.NONE );
     props = PropsUI.getInstance();
     this.dialogTitle = dialogTitle;
-    this.header = header;
     this.url = url;
   }
 
   public void open() {
     Shell parent = getParent();
-    Display display = parent.getDisplay();
+    display = parent.getDisplay();
 
     shell = new Shell( parent, SWT.RESIZE | SWT.MAX | SWT.MIN );
     shell.setImage( GUIResource.getInstance().getImageSpoon() );
@@ -73,19 +57,6 @@ public class HttpLiteDialog extends Dialog {
     shell.setLayout( formLayout );
     shell.setText( dialogTitle );
 
-    int margin = Const.MARGIN;
-
-    // Header
-    Label wHeader = new Label( shell, SWT.NONE );
-    wHeader.setText( header );
-    wHeader.setBackground( wHeader.getParent().getBackground() );
-    FontData[] fD = wHeader.getFont().getFontData();
-    fD[ 0 ].setHeight( 16 );
-    wHeader.setFont( new Font( display, fD[ 0 ] ) );
-    FormData fdHeader = new FormData();
-    fdHeader.top = new FormAttachment( 0, headerLabelPosition );
-    fdHeader.left = new FormAttachment( 0, margin );
-    wHeader.setLayoutData( fdHeader );
 
     // Canvas
     wBrowser = new Browser( shell, SWT.NONE );
@@ -97,35 +68,6 @@ public class HttpLiteDialog extends Dialog {
     fdBrowser.right = new FormAttachment( 100, 0 );
     fdBrowser.bottom = new FormAttachment( 100, -buttonHeight );
     wBrowser.setLayoutData( fdBrowser );
-
-    // Composite
-    Composite buttonsPane = new Composite( shell, SWT.NONE );
-    Color grey = new Color( display, 240, 240, 240 );
-    buttonsPane.setBackground( grey );
-    buttonsPane.setLayout( new FormLayout() );
-    FormData fdButtonsPane = new FormData();
-    fdButtonsPane.left = new FormAttachment( 0, 0 );
-    fdButtonsPane.right = new FormAttachment( 100, 0 );
-    fdButtonsPane.bottom = new FormAttachment( 100, 0 );
-    buttonsPane.setLayoutData( fdButtonsPane );
-
-    // Some buttons
-    wOK = new Button( buttonsPane, SWT.PUSH );
-    wOK.setText( BaseMessages.getString(PKG, "System.Button.OK") );
-    wOK.setBackground( grey );
-    fdOK = new FormData();
-    fdOK.left = new FormAttachment( 50, 0 );
-    fdOK.bottom = new FormAttachment( 100, 0 );
-    wOK.setLayoutData( fdOK );
-
-    // Add listeners
-    lsOK = new Listener() {
-      public void handleEvent( Event e ) {
-        ok();
-      }
-    };
-
-    wOK.addListener( SWT.Selection, lsOK );
 
     // Detect [X] or ALT-F4 or something that kills this window...
     shell.addShellListener( new ShellAdapter() {
@@ -155,6 +97,15 @@ public class HttpLiteDialog extends Dialog {
   }
 
   public void setSize(final Shell shell){
-    BaseStepDialog.setSize( shell, 800, 600, true );
+    BaseStepDialog.setSize(shell, 800, 600, true);
+  }
+
+  public void close(){
+    display.asyncExec(new Runnable() {
+      @Override
+      public void run() {
+        shell.close();
+      }
+    });
   }
 }
