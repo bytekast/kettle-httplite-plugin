@@ -3,10 +3,14 @@ package org.pentaho.di.core.httplite.dwr.proxy;
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.pentaho.di.core.httplite.dwr.model.ThinCCGeneratorModel;
+import org.pentaho.di.core.httplite.dwr.model.ThinCreditCardType;
+import org.pentaho.di.trans.steps.randomccnumber.RandomCreditCardNumberGenerator;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Rowell Belen
@@ -23,6 +27,24 @@ public class ThinCCNumberGeneratorProxy implements IThinCCNumberGeneratorProxy {
 
   public synchronized void unsubscribe(final String id){
     this.proxyCache.remove(id);
+  }
+
+  @RemoteMethod
+  public ThinCreditCardType[] getCardTypes(){
+
+    List<ThinCreditCardType> list = new ArrayList<ThinCreditCardType>();
+
+    String[] types = RandomCreditCardNumberGenerator.cardTypes;
+    if(types != null){
+      for(int i=0; i < types.length; i++){
+        ThinCreditCardType type = new ThinCreditCardType();
+        type.setValue(i+"");
+        type.setName(types[i]);
+        list.add(type);
+      }
+    }
+
+    return list.toArray(new ThinCreditCardType[list.size()]);
   }
 
   @Override

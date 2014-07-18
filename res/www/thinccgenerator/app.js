@@ -22,6 +22,13 @@ app.controller('formController', function($scope, $location) {
     $scope.$apply();
   });
 
+  ThinCCNumberGeneratorProxy.getCardTypes(function(data){
+    $scope.cardTypes = data;
+    $scope.selectedCardType = $scope.cardTypes[0];
+
+    $scope.$apply();
+  });
+
   $scope.help = function() {
     ThinCCNumberGeneratorProxy.help($scope.id);
   };
@@ -35,19 +42,9 @@ app.controller('formController', function($scope, $location) {
     ThinCCNumberGeneratorProxy.cancel($scope.id);
   };
 
-
-  $scope.cardTypes = [
-    {name:'American Express'},
-    {name:'Visa'},
-    {name:'Master Card'},
-    {name:'Discover'}
-  ];
-
   // defaults
-  $scope.selectedCardType = $scope.cardTypes[0];
   $scope.cardLength = 16;
   $scope.cardCount = 1;
-
 
   $scope.addCardEntry = function(){
 
