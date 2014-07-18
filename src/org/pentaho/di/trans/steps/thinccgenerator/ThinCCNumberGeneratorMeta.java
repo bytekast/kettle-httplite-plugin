@@ -27,7 +27,7 @@ public class ThinCCNumberGeneratorMeta extends RandomCCNumberGeneratorMeta imple
     return thinCCGeneratorModel;
   }
 
-  public void setFileExistsRemoteModel(ThinCCGeneratorModel thinCCGeneratorModel) {
+  public void setThinCCGeneratorModel(ThinCCGeneratorModel thinCCGeneratorModel) {
 
     this.thinCCGeneratorModel = thinCCGeneratorModel;
 
