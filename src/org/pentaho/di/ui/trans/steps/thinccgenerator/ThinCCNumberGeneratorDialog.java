@@ -70,13 +70,14 @@ public class ThinCCNumberGeneratorDialog extends BaseStepDialog implements StepD
   }
 
   private void onClose(){
+
+    persistModel();
+
     logBasic("FileExistsWebDialog: closing: " + this.getID());
     if(dialogProxy != null){
       dialogProxy.destroy(); // unsubscribe remote proxy listener
       dialogProxy = null; // remove reference for garbage collection
     }
-
-    persistModel();
   }
 
   public String getID() {
@@ -101,7 +102,7 @@ public class ThinCCNumberGeneratorDialog extends BaseStepDialog implements StepD
   private void persistModel(){
     // serialize
     input.setThinCCGeneratorModel(model);
-    logBasic("De-serialize: " + xstream.toXML(this.model));
+    logBasic("Serialize: " + xstream.toXML(this.model));
   }
 
   public ThinCCGeneratorModel getModel() {
