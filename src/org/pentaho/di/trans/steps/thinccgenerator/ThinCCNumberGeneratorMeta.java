@@ -34,7 +34,13 @@ public class ThinCCNumberGeneratorMeta extends RandomCCNumberGeneratorMeta imple
       ThinCreditCardEntry[] entries = new ThinCreditCardEntry[super.getFieldCCType().length];
       for(int i = 0; i < super.getFieldCCType().length; i++){
         entries[i] = new ThinCreditCardEntry();
-        entries[i].setType(RandomCreditCardNumberGenerator.getCardName(Integer.parseInt(super.getFieldCCType()[i])));
+        try {
+          int type = Integer.parseInt(super.getFieldCCType()[i]);
+          entries[i].setType(RandomCreditCardNumberGenerator.getCardName(type));
+        }
+        catch (Exception e){
+          entries[i].setType(super.getFieldCCType()[i]);
+        }
         entries[i].setCount(Integer.parseInt(super.getFieldCCSize()[i]));
         entries[i].setLength(Integer.parseInt(super.getFieldCCLength()[i]));
       }
@@ -60,7 +66,7 @@ public class ThinCCNumberGeneratorMeta extends RandomCCNumberGeneratorMeta imple
       super.allocate( count );
 
       for ( int i = 0; i < count; i++ ) {
-        super.getFieldCCType()[i] = RandomCreditCardNumberGenerator.getCardType(entries[i].getType()) + "";
+        super.getFieldCCType()[i] = entries[i].getType();
         super.getFieldCCLength()[i] = entries[i].getLength() + "";
         super.getFieldCCSize()[i] = entries[i].getCount() + "";
       }

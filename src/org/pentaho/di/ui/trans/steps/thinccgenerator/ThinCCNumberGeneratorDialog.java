@@ -102,6 +102,7 @@ public class ThinCCNumberGeneratorDialog extends BaseStepDialog implements StepD
   private void persistModel(){
     // serialize
     input.setThinCCGeneratorModel(model);
+    input.setChanged();
     logBasic("Serialize: " + xstream.toXML(this.model));
   }
 
