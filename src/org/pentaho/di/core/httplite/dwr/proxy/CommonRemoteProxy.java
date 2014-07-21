@@ -1,4 +1,4 @@
-package org.pentaho.di.core.httplite.dwr;
+package org.pentaho.di.core.httplite.dwr.proxy;
 
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RemoteProxy
-public class RemoteFunctions {
+public class CommonRemoteProxy {
 
   @RemoteMethod
   public String getPluginFolderPath(){

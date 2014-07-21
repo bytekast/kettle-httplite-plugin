@@ -95,7 +95,7 @@ public class HttpLite implements SpoonPluginInterface {
     dwrServlet.setInitParameter("debug", "true");
 
     // This is no longer required. Spring manages the DWR objects
-    //dwrServlet.setInitParameter("classes", "org.pentaho.di.core.httplite.dwr.RemoteFunctions");
+    //dwrServlet.setInitParameter("classes", "org.pentaho.di.core.httplite.dwr.proxy.RemoteFunctions");
 
     RunInPluginClassLoader.run(new Runnable() {
       @Override
