@@ -17,16 +17,16 @@ import java.util.List;
  */
 @Component
 @RemoteProxy
-public class ThinCCNumberGeneratorProxy implements IThinCCNumberGeneratorProxy {
+public class ThinCCNumberGeneratorProxy implements ThinCCNumberGeneratorService {
 
-  private HashMap<String, IThinCCNumberGeneratorProxy> proxyCache = new HashMap<String, IThinCCNumberGeneratorProxy>();
+  private HashMap<String, ThinCCNumberGeneratorService> serviceCache = new HashMap<String, ThinCCNumberGeneratorService>();
 
-  public synchronized void subscribe(final String id, IThinCCNumberGeneratorProxy iCreditCardGeneratorProxy){
-    this.proxyCache.put(id, iCreditCardGeneratorProxy);
+  public synchronized void subscribe(final String id, ThinCCNumberGeneratorService service){
+    this.serviceCache.put(id, service);
   }
 
   public synchronized void unsubscribe(final String id){
-    this.proxyCache.remove(id);
+    this.serviceCache.remove(id);
   }
 
   @RemoteMethod
@@ -50,9 +50,9 @@ public class ThinCCNumberGeneratorProxy implements IThinCCNumberGeneratorProxy {
   @Override
   @RemoteMethod
   public ThinCCGeneratorModel getModel(String id) {
-    IThinCCNumberGeneratorProxy proxy = this.proxyCache.get(id);
-    if(proxy != null){
-      return proxy.getModel(id);
+    ThinCCNumberGeneratorService service = this.serviceCache.get(id);
+    if(service != null){
+      return service.getModel(id);
     }
     return null;
   }
@@ -60,32 +60,32 @@ public class ThinCCNumberGeneratorProxy implements IThinCCNumberGeneratorProxy {
   @Override
   @RemoteMethod
   public void applyModel(String id, ThinCCGeneratorModel thinCCGeneratorModel) {
-    IThinCCNumberGeneratorProxy proxy = this.proxyCache.get(id);
-    if(proxy != null){
-      proxy.applyModel(id, thinCCGeneratorModel);
+    ThinCCNumberGeneratorService service = this.serviceCache.get(id);
+    if(service != null){
+      service.applyModel(id, thinCCGeneratorModel);
     }
   }
 
   @Override
   @RemoteMethod
   public void help(String id) {
-    IThinCCNumberGeneratorProxy proxy = this.proxyCache.get(id);
-    if(proxy != null){
-      proxy.help(id);
+    ThinCCNumberGeneratorService service = this.serviceCache.get(id);
+    if(service != null){
+      service.help(id);
     }
   }
 
   @Override
   @RemoteMethod
   public void cancel(String id) {
-    IThinCCNumberGeneratorProxy proxy = this.proxyCache.get(id);
-    if(proxy != null){
-      proxy.cancel(id);
+    ThinCCNumberGeneratorService service = this.serviceCache.get(id);
+    if(service != null){
+      service.cancel(id);
     }
   }
 
   @Scheduled(fixedRate = 10000)
   public void cleanup(){
-    System.out.println("CreditCardGeneratorProxy: size of proxyCache map: " + this.proxyCache.size());
+    System.out.println("ThinCCNumberGeneratorProxy: size of serviceCache map: " + this.serviceCache.size());
   }
 }

@@ -1,8 +1,8 @@
 package org.pentaho.di.ui.trans.steps.thinccgenerator;
 
 import org.pentaho.di.core.httplite.dwr.model.ThinCCGeneratorModel;
+import org.pentaho.di.core.httplite.dwr.proxy.ThinCCNumberGeneratorService;
 import org.pentaho.di.core.httplite.dwr.proxy.ThinCCNumberGeneratorProxy;
-import org.pentaho.di.core.httplite.dwr.proxy.IThinCCNumberGeneratorProxy;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -15,22 +15,22 @@ import javax.annotation.PreDestroy;
  * @author Rowell Belen
  */
 @Configurable(autowire = Autowire.BY_TYPE)
-public class ThinCCNumberGeneratorDialogProxy implements IThinCCNumberGeneratorProxy {
+public class ThinCCNumberGeneratorController implements ThinCCNumberGeneratorService {
 
   private ThinCCNumberGeneratorDialog dialog;
 
   @Autowired
-  private ThinCCNumberGeneratorProxy remoteProxy;
+  private ThinCCNumberGeneratorProxy proxy;
 
-  public ThinCCNumberGeneratorDialogProxy(ThinCCNumberGeneratorDialog dialog){
+  public ThinCCNumberGeneratorController(ThinCCNumberGeneratorDialog dialog){
     this.dialog = dialog;
   }
 
   @PostConstruct // called after dependencies are injected
   public void setup(){
     // Need to subscribe this dialog to the proxy to expose remote methods implemented in IMyStepRemoteProxy
-    if(remoteProxy != null){
-      remoteProxy.subscribe(this.dialog.getID(), this);
+    if(proxy != null){
+      proxy.subscribe(this.dialog.getID(), this);
     }
   }
 
@@ -62,7 +62,7 @@ public class ThinCCNumberGeneratorDialogProxy implements IThinCCNumberGeneratorP
 
   @PreDestroy
   public void destroy(){
-    remoteProxy.unsubscribe(dialog.getID());
+    proxy.unsubscribe(dialog.getID());
     this.dialog = null; // remove reference for garbage collection
   }
 }

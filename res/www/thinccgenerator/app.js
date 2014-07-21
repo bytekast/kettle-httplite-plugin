@@ -42,9 +42,11 @@ app.controller('formController', function($scope, $location) {
     ThinCCNumberGeneratorProxy.cancel($scope.id);
   };
 
-  // defaults
-  $scope.cardLength = 16;
-  $scope.cardCount = 1;
+  $scope.reset = function(){
+    // defaults
+    $scope.cardLength = 0;
+    $scope.cardCount = 0;
+  }
 
   $scope.addCardEntry = function(){
 
@@ -57,10 +59,15 @@ app.controller('formController', function($scope, $location) {
       length: $scope.cardLength,
       count: $scope.cardCount
     });
+
+    $scope.reset();
   }
 
   $scope.removeCardEntry = function(index){
     $scope.cardEntries.splice(index, 1);
   }
+
+  // init
+  $scope.reset();
 
 });

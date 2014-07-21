@@ -22,7 +22,7 @@ public class ThinCCNumberGeneratorDialog extends BaseStepDialog implements StepD
   private final String ID = UUID.randomUUID().toString();
   private final XStream xstream = new XStream();
 
-  private ThinCCNumberGeneratorDialogProxy dialogProxy;
+  private ThinCCNumberGeneratorController controller;
   private HttpLiteDialog httpLiteDialog;
 
   private ThinCCNumberGeneratorMeta input;
@@ -44,7 +44,7 @@ public class ThinCCNumberGeneratorDialog extends BaseStepDialog implements StepD
   @Override
   public String open() {
 
-    dialogProxy = new ThinCCNumberGeneratorDialogProxy(this); // subscribe remote proxy listener
+    controller = new ThinCCNumberGeneratorController(this); // subscribe remote controller listener
 
     final String url = "http://localhost:3388/static/thinccgenerator/index.html?id=" + getID(); // pass the unique id to the client
     httpLiteDialog =
@@ -73,10 +73,10 @@ public class ThinCCNumberGeneratorDialog extends BaseStepDialog implements StepD
 
     persistModel();
 
-    logBasic("FileExistsWebDialog: closing: " + this.getID());
-    if(dialogProxy != null){
-      dialogProxy.destroy(); // unsubscribe remote proxy listener
-      dialogProxy = null; // remove reference for garbage collection
+    logBasic("ThinCCNumberGeneratorDialog: closing: " + this.getID());
+    if(controller != null){
+      controller.destroy(); // unsubscribe remote controller listener
+      controller = null; // remove reference for garbage collection
     }
   }
 
@@ -85,7 +85,6 @@ public class ThinCCNumberGeneratorDialog extends BaseStepDialog implements StepD
   }
 
   public void close(){
-    logBasic("trying to close...");
     httpLiteDialog.close();
   }
 

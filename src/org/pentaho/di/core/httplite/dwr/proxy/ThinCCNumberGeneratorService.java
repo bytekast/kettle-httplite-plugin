@@ -5,7 +5,7 @@ import org.pentaho.di.core.httplite.dwr.model.ThinCCGeneratorModel;
 /**
  * @author Rowell Belen
  */
-public interface IThinCCNumberGeneratorProxy {
+public interface ThinCCNumberGeneratorService {
 
   ThinCCGeneratorModel getModel(String id);
   void applyModel(String id, ThinCCGeneratorModel thinCCGeneratorModel);
