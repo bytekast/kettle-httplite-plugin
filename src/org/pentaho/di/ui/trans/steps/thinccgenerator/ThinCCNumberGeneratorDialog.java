@@ -44,7 +44,7 @@ public class ThinCCNumberGeneratorDialog extends BaseStepDialog implements StepD
   @Override
   public String open() {
 
-    dialogProxy = new ThinCCNumberGeneratorDialogProxy(this);
+    dialogProxy = new ThinCCNumberGeneratorDialogProxy(this); // subscribe remote proxy listener
 
     final String url = "http://localhost:3388/static/thinccgenerator/index.html?id=" + getID(); // pass the unique id to the client
     httpLiteDialog =
@@ -112,6 +112,6 @@ public class ThinCCNumberGeneratorDialog extends BaseStepDialog implements StepD
 
   public void setModel(ThinCCGeneratorModel model) {
     this.model = model;
-    this.stepname = this.model.getStepName();
+    this.stepname = this.model.getStepName(); // update the step name
   }
 }

@@ -11,17 +11,13 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.pentaho.di.ui.core.PropsUI;
-import org.pentaho.di.ui.core.database.dialog.DatabaseDialog;
 import org.pentaho.di.ui.core.gui.GUIResource;
 import org.pentaho.di.ui.trans.step.BaseStepDialog;
 
 /**
  * @author Rowell Belen
- * This is mostly a copy of org.pentaho.di.ui.core.dialog.ShowHelpDialog
  */
 public class HttpLiteDialog extends Dialog {
-
-  private static Class<?> PKG = DatabaseDialog.class; // for i18n purposes, needed by Translator2!!
 
   private String dialogTitle;
   private String url;

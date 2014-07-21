@@ -19,8 +19,6 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable(preConstruction = true, autowire = Autowire.BY_TYPE)
 public class ThinCCNumberGeneratorMeta extends RandomCCNumberGeneratorMeta implements StepMetaInterface {
 
-  //private ThinCCGeneratorModel thinCCGeneratorModel;
-
   public ThinCCGeneratorModel getThinCCGeneratorModel() {
 
     // map models
@@ -51,8 +49,6 @@ public class ThinCCNumberGeneratorMeta extends RandomCCNumberGeneratorMeta imple
   }
 
   public void setThinCCGeneratorModel(ThinCCGeneratorModel thinCCGeneratorModel) {
-
-    //this.thinCCGeneratorModel = thinCCGeneratorModel;
 
     // map models
     setCardLengthFieldName(thinCCGeneratorModel.getLengthFieldName());
