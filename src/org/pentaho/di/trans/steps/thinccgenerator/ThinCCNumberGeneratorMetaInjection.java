@@ -20,4 +20,8 @@ public class ThinCCNumberGeneratorMetaInjection implements StepMetaInjectionInte
   public void injectStepMetadataEntries(List<StepInjectionMetaEntry> stepInjectionMetaEntries) throws KettleException {
 
   }
+
+  @Override public List<StepInjectionMetaEntry> extractStepMetadataEntries() throws KettleException {
+    return null;
+  }
 }
